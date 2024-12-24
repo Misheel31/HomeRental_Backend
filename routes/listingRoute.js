@@ -1,32 +1,50 @@
-import express from "express"
-import multer from "multer"
-import {
-  createListing,
-  getListingDetails,
-  getListings,
-  getListingsBySearch,
-} from "../controller/listingController.js"
+// const express = require("express");
+// const multer = require("multer");
+// const {
+//   createListing,
+//   getListingDetails,
+//   getListings,
+//   getListingsBySearch,
+// } = require("../controller/listingController");
 
-// multer configuration
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/uploads/")
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  },
-})
 
-const upload = multer({ storage })
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
 
-const router = express.Router()
+// const upload = multer({ storage });
 
-router.post("/create", upload.array("listingPhotos"), createListing)
+// const router = express.Router();
 
-router.get("/", getListings)
+// router.post("/create", upload.array("listingPhotos"), createListing);
+// router.get("/", getListings);
+// router.get("/:listingId", getListingDetails);
+// router.get("/search/:search", getListingsBySearch);
 
-router.get("/:listingId", getListingDetails)
+// module.exports = router; 
 
-router.get("/search/:search", getListingsBySearch)
 
-export default router
+
+// const express = require("express");
+// const { createListing } = require("../controller/listingController");
+
+// const router = express.Router();
+
+// router.post("/create", createListing);
+
+// module.exports = router;
+
+
+const express = require("express");
+const { createListing } = require("../controller/listingController");
+
+const router = express.Router();
+
+router.post("/create", createListing);
+
+module.exports = router;
