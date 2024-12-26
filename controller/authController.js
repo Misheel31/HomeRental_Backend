@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken')
 const comparePassword = require('../helpers/auth').comparePassword;
 
 const test = (req, res) => {

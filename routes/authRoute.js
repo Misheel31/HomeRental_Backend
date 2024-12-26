@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { test, registerUser, loginUser } = require('../controller/authController')
-const { authenticateToken } = require("../security/Auth");
+// const { authenticateToken } = require("../security/Auth");
 
 
 //test route
