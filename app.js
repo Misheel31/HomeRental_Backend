@@ -39,6 +39,7 @@ const listingRoutes = require('./routes/listingRoute.js');
 const bookingRoute = require('./routes/bookingRoute.js')
 const userRoute = require('./routes/userRoute.js');
 const authRoutes =require('./routes/authRoute.js')
+const wishlistRoutes = require('./routes/wishlistRoute.js')
 const connectDB = require("./config/db");
 
 connectDB();
@@ -50,5 +51,7 @@ app.use("/api/user", userRoute);
 app.use('/api/listings', listingRoutes);
 app.use('/api/booking', bookingRoute)
 app.use('/api/auth', authRoutes)
+app.use('/api/wishlist', wishlistRoutes)
+
 
 app.listen(3000, () => console.log('Server running on port 3000'));
