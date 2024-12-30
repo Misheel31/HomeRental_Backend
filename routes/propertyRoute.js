@@ -1,14 +1,39 @@
 const express = require("express");
 const { createProperty, getAllProperties, getPropertyById, updatePropertyById, deletePropertyById, searchProperties, getPropertiesByLocation, getPropertiesByPriceRange } = require("../controller/propertyController"); 
-
-
 const router = express.Router();
 
-router.post("/properties/create", createProperty);
+const multer = require("multer")
 
+// Configure Multer storage
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'property_images'); 
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname); 
+    },
+  });
+  
+  // File filter to validate file types
+  const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg", "image/avif"];
+    if (allowedFileTypes.includes(file.mimetype)) {
+      cb(null, true); 
+    } else {
+      cb(new Error("Invalid file type. Only JPEG, PNG, JPG, and AVIF are allowed."), false); 
+    }
+  };
+  
+  // Initialize Multer with storage and file filter
+  const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+  });
+
+router.post("/properties/create",upload.single("image"),createProperty);
 router.get("/properties", getAllProperties);
 router.get("/properties/:id", getPropertyById);
-router.put("/properties/:id", updatePropertyById);
+router.put("/properties/:id",upload.single("image"), updatePropertyById);
 router.delete("/properties/:id", deletePropertyById);
 
 //search and filter routes
