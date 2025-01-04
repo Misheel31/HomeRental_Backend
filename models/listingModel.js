@@ -107,7 +107,7 @@ const listingSchema = new mongoose.Schema({
   bedCount: Number,
   bathroomCount: Number,
   amenities: [String],
-  listingPhotoPaths: [String],
+  imageURL: [String],
   title: String,
   description: String,
   price: String,
