@@ -133,6 +133,7 @@ const createListing = async (req, res, next) => {
       title,
       description,
       price,
+      imageURL
     } = req.body;
 
     const newListing = new Listing({
@@ -152,6 +153,7 @@ const createListing = async (req, res, next) => {
       title,
       description,
       price,
+      imageURL
     });
 
     await newListing.save();
@@ -161,6 +163,8 @@ const createListing = async (req, res, next) => {
     next(error);
   }
 };
+
+
 
 module.exports = {
   createListing,
