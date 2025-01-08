@@ -2,19 +2,32 @@ const Property = require("../models/propertyModel");
 
 const createProperty = async (req, res) => {
     try {
-        const { title, description, location, imageURL, pricePerNight, available } = req.body;
+        const {category,type, streetAddress, aptSuite,city, state,country,guestCount,bedroomCount, bedCount, bathroomCount,amenities, title, description, location, imageURL, pricePerNight, available } = req.body;
 
         if (!title || !description || !location || !imageURL || !pricePerNight) {
             return res.status(400).json({ error: "All fields are required" });
         }
 
         const newProperty = new Property({
+            category,
+            type,
+            streetAddress,
+            aptSuite,
+            city,
+            state,
+            country,
+            guestCount,
+            bedroomCount,
+            bedCount,
+            bathroomCount,
+            amenities,
             title,
             description,
             location,
             imageURL,
             pricePerNight,
             available: available ?? true,
+
         });
 
         await newProperty.save();
@@ -26,6 +39,7 @@ const createProperty = async (req, res) => {
 };
 
 const getAllProperties = async (req, res) => {
+    
     try {
         const properties = await Property.find();
         if (!properties.length) {
