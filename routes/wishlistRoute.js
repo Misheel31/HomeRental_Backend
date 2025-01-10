@@ -4,7 +4,7 @@ const {
     getWishlistById,
     createWishlist,
     deleteWishlist
-} = require('../controllers/wishlistController');
+} = require('../controller/wishlistController');
 
 const router = express.Router();
 
