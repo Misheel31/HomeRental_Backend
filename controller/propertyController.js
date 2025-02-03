@@ -134,13 +134,11 @@ const updatePropertyById = async (req, res) => {
 
 const deletePropertyById = async (req, res) => {
   try {
-    // Use let instead of const because we're modifying the value of id
     let { id } = req.params;
 
     // Clean the ID (trim whitespace, remove unwanted characters like colons and newlines)
     id = id.trim().replace(/^:/, "").replace(/\n$/, "");
 
-    // Attempt to find and delete the property
     const deletedProperty = await Property.findByIdAndDelete(id);
 
     if (!deletedProperty) {
@@ -199,7 +197,12 @@ const getPropertiesByLocation = async (req, res) => {
 
 const getPropertiesByPriceRange = async (req, res) => {
   try {
-    const { minPrice, maxPrice } = req.query;
+    const minPrice = parseFloat(req.query.minPrice);
+    const maxPrice = parseFloat(req.query.maxPrice);
+
+    if (isNaN(minPrice) || isNaN(maxPrice)) {
+      return res.status(400).json({ message: "Invalid price range values" });
+    }
 
     const properties = await Property.find({
       pricePerNight: { $gte: minPrice, $lte: maxPrice },
