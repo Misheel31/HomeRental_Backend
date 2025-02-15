@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+
 // const comparePassword = require('../helpers/auth').comparePassword;
 
 const test = (req, res) => {
@@ -40,6 +42,27 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      post: 587,
+      secure: false,
+      protocol: "smtp",
+      auth: {
+        user: "misheelrai7@gmail.com",
+        pass: "xrkq aaze gzsr ssvb",
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: "misheelrai7@gmail.com",
+      to: user.email,
+      subject: "User Registration",
+      html: `
+          <h1> Your Registration has been Completed</h1>
+          <p>Your user id is ${user.id}</p>
+          `,
+    });
+
     // Remove JWT creation temporarily
     // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     //   expiresIn: "1d",
@@ -48,8 +71,8 @@ const registerUser = async (req, res) => {
     res.status(201).json({
       message: "User registered successfully",
       user: { username: user.username, email: user.email },
-      // Return the token temporarily as null or empty for now
       token: null,
+      info,
     });
   } catch (error) {
     console.error("Error during registration:", error);
@@ -160,11 +183,9 @@ const resetPassword = async (req, res) => {
       return res.json({ error: "User not found" });
     }
 
-    // Log user and newPassword for debugging
     console.log("User:", user);
     console.log("New Password:", newPassword);
 
-    // Update user's password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
