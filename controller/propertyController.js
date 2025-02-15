@@ -135,8 +135,6 @@ const updatePropertyById = async (req, res) => {
 const deletePropertyById = async (req, res) => {
   try {
     let { id } = req.params;
-
-    // Clean the ID (trim whitespace, remove unwanted characters like colons and newlines)
     id = id.trim().replace(/^:/, "").replace(/\n$/, "");
 
     const deletedProperty = await Property.findByIdAndDelete(id);
