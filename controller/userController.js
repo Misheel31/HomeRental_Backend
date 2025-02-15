@@ -65,7 +65,7 @@ const update = async (req, res) => {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.status(200).json("Data Updated");
+    res.status(200).json("Profile Updated");
   } catch (e) {
     res.json(e);
   }
