@@ -1,5 +1,5 @@
 const Booking = require("../models/bookingModel");
-const User = require("../models/userModel"); // Assuming User is your customer model
+const User = require("../models/userModel");
 
 const createBooking = async (req, res) => {
   try {
@@ -8,12 +8,10 @@ const createBooking = async (req, res) => {
       startDate,
       endDate,
       totalPrice,
-      specialRequests,
       propertyId,
     } = req.body;
 
-    // Validate request data
-    if (!username || !startDate || !endDate || !totalPrice) {
+    if (!username || !startDate || !endDate || !totalPrice || !propertyId) {
       return res.status(400).json({ error: "Missing required fields." });
     }
     const user = await User.findOne({ username });
@@ -26,7 +24,7 @@ const createBooking = async (req, res) => {
       startDate,
       endDate,
       totalPrice,
-      specialRequests,
+      // specialRequests,
       propertyId,
     });
 
@@ -39,7 +37,7 @@ const createBooking = async (req, res) => {
 
 const getBookings = async (req, res) => {
   try {
-    const { username } = req.query;  
+    const { username } = req.query;
 
     let bookings;
 
@@ -51,7 +49,6 @@ const getBookings = async (req, res) => {
 
       bookings = await Booking.find({ username: user.username });
     } else {
-      // If no username is provided, return all bookings
       bookings = await Booking.find();
     }
 
@@ -72,19 +69,30 @@ const cancelBooking = async (req, res) => {
       return res.status(404).json({ error: "Booking not found" });
     }
 
-    // Delete the booking
     await Booking.findByIdAndDelete(bookingId);
 
-    res.status(200).json({ success: true, message: "Booking canceled successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Booking canceled successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
+const getAllBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find();
+    res.status(200).json({ success: true, bookings });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   createBooking,
   getBookings,
-  cancelBooking
+  cancelBooking,
+  getAllBookings,
 };
