@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const wishlistSchema = new mongoose.Schema({
-  category: String,
   city: String,
   state: String,
   country: String,
@@ -12,18 +11,18 @@ const wishlistSchema = new mongoose.Schema({
   title: String,
   description: String,
   price: String,
-  imageURL: { type: String, required: true },
+  image: { type: String, required: true },
   pricePerNight: { type: String, required: true },
   location: { type: String, required: true },
-  // username: {
-  //   type: String,
-  //   ref: "User",
-  // },
+  username: {
+    type: String,
+    ref: "User",
+  },
 
-  // propertyId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   required: true,
-  // },
+  propertyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 const Wishlist = mongoose.model("wishlist", wishlistSchema);
