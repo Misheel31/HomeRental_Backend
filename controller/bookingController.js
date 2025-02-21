@@ -3,13 +3,7 @@ const User = require("../models/userModel");
 
 const createBooking = async (req, res) => {
   try {
-    const {
-      username,
-      startDate,
-      endDate,
-      totalPrice,
-      propertyId,
-    } = req.body;
+    const { username, startDate, endDate, totalPrice, propertyId } = req.body;
 
     if (!username || !startDate || !endDate || !totalPrice || !propertyId) {
       return res.status(400).json({ error: "Missing required fields." });
@@ -90,9 +84,27 @@ const getAllBookings = async (req, res) => {
   }
 };
 
+const checkoutBooking = async (req, res) => {
+  const { bookingId } = req.params;
+
+  try {
+    const booking = await Booking.findByIdAndDelete(bookingId);
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    res.status(200).json({ message: "Booking sucessfully confirmed" });
+  } catch (e) {
+    re.status(500).json({
+      message: "Error processing checkout",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookings,
   cancelBooking,
   getAllBookings,
+  checkoutBooking,
 };
