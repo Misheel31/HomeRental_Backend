@@ -28,7 +28,7 @@ const registerUser = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.json({ error: "Email is already registered" });
+      return res.status(400).json({ error: "Email is already registered" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -166,7 +166,7 @@ const forgotPassword = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ status: "Token generated", token });
+    res.status(200).json({ status: "Token generated", token });
   } catch (error) {
     console.error("Error in forgotPassword:", error);
     res.status(500).json({ status: "Internal Server Error" });
