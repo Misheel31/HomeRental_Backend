@@ -12,31 +12,27 @@ const getWishlists = async (req, res) => {
 const getWishlistByUsername = async (req, res) => {
   try {
     const { username } = req.params;
-    console.log("Fetching wishlist for user:", username); // Debug log
+    console.log("Fetching wishlist for user:", username);
 
     const wishlist = await Wishlist.find({ username });
 
     if (!wishlist || wishlist.length === 0) {
-      return res.status(404).json({ message: "No wishlist items found" }); // ✅ Only return once
+      return res.status(404).json({ message: "No wishlist items found" });
     }
 
     res.status(200).json(wishlist);
   } catch (error) {
     console.error("Error fetching wishlist:", error);
-    res.status(500).json({ error: "Internal Server Error" }); // ✅ Avoid duplicate responses
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const createWishlist = async (req, res) => {
   try {
-    console.log("Received Wishlist Request:", req.body);
-
     const newWishlist = new Wishlist(req.body);
     const savedWishlist = await newWishlist.save();
-
     res.status(201).json(savedWishlist);
   } catch (error) {
-    console.error("Error creating wishlist:", error);
     res
       .status(500)
       .json({ error: "Failed to create the wishlist", details: error.message });

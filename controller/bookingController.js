@@ -46,7 +46,7 @@ const getBookings = async (req, res) => {
       bookings = await Booking.find();
     }
 
-    res.status(200).json({ success: true, bookings });
+    res.status(200).json({ success: true, data: bookings });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -101,10 +101,32 @@ const checkoutBooking = async (req, res) => {
   }
 };
 
+const getBookingsByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "Customer not found." });
+    }
+
+    const bookings = await Booking.find({ username });
+    if (!bookings.length) {
+      return res.status(404).json({ error: "No bookings found." });
+    }
+
+    res.status(200).json({ success: true, bookings });
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookings,
   cancelBooking,
   getAllBookings,
   checkoutBooking,
+  getBookingsByUsername,
 };
