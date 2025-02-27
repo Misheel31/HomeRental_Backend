@@ -11,7 +11,7 @@ it("should register a new user", function (done) {
   this.timeout(5000);
   const newUser = {
     username: "testuser",
-    email: "testuser2@example.com",
+    email: "testuser4@example.com",
     password: "password123",
     confirmPassword: "password123",
     // image: "image_url",

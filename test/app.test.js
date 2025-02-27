@@ -48,10 +48,10 @@ describe("/API Tests", function () {
     chai
       .request(server)
       .post("/api/property/properties/create")
-      .field(newProperty) // sending regular fields as form fields
+      .field(newProperty) 
       .attach(
         "image",
-        fs.createReadStream(path.join("property_images", "images.jpg")) // updated directory name to 'property_images'
+        fs.createReadStream(path.join("property_images", "images.jpg"))
       )
       .end((err, res) => {
         if (err) {
@@ -63,3 +63,4 @@ describe("/API Tests", function () {
       });
   });
 });
+
