@@ -26,9 +26,3 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/property", propertyRoute);
 app.use("/api/payment", paymentRoutes);
 app.use("/property_images", express.static("property_images"));
-
-if (require.main == module && process.env.NODE_ENV !== "test") {
-  app.listen(3000, () => console.log("Server running on port 3000"));
-}
-
-module.exports = app;
