@@ -46,7 +46,7 @@ describe("Booking API Tests", () => {
   });
 
   it("should get bookings by username", async () => {
-    const res = await chai.request(server).get(`/api/booking/testuser`);
+    const res = await chai.request(server).get(`/api/booking/${userId}`);
     expect(res).to.have.status(200);
     expect(res.body).to.have.property("success").equal(true);
     expect(res.body.bookings).to.be.an("array").with.length.greaterThan(0);
