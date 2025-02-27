@@ -6,6 +6,7 @@ const userRoute = require("./routes/userRoute.js");
 const authRoutes = require("./routes/authRoute.js");
 const wishlistRoutes = require("./routes/wishlistRoute.js");
 const propertyRoute = require("./routes/propertyRoute.js");
+const paymentRoutes = require("./routes/paymentRoute");
 const connectDB = require("./config/db");
 // const path = require('path');
 
@@ -23,6 +24,11 @@ app.use("/api/booking", bookingRoute);
 app.use("/api/auth", authRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/property", propertyRoute);
+app.use("/api/payment", paymentRoutes);
 app.use("/property_images", express.static("property_images"));
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+if (require.main == module && process.env.NODE_ENV !== "test") {
+  app.listen(3000, () => console.log("Server running on port 3000"));
+}
+
+module.exports = app;
