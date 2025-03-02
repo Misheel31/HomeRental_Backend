@@ -1,6 +1,6 @@
 # 🏠 Rentify- Home Rental platform REST API (Node.js & Express)
 
-This is a **RESTful API** built with **Node.js and Express** for a home rental platform. It allows users to **search, filter, book properties, and manage their wishlist**, while admins can **create, edit, and delete properties**.
+This is a **RESTful API** built with **Node.js and Express** for a home rental platform. It allows users to **search, filter, book properties, and manage their wishlist**, while admin can **create, edit, and delete properties**.
 
 ## 📌 Features
 
